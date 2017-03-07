@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,15 +26,17 @@ import javax.swing.table.DefaultTableModel;
  * @author gerald junha
  */
 public class Login extends javax.swing.JFrame {
-    String nol_jam = "";
-    String nol_menit ="";
-    String nol_detik = "";
-
+    java.util.Date tglsekarang = new java.util.Date();
+    private SimpleDateFormat smpdtfmt = new SimpleDateFormat("dd MMMMMMMMM yyyy", Locale.getDefault());
+//diatas adalah pengaturan format penulisan, bisa diubah sesuai keinginan.
+    private String tanggal = smpdtfmt.format(tglsekarang);
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        labeltanggal.setText(tanggal);
+        SetJam();
     }
 
     /**
@@ -95,11 +98,15 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setBounds(10, 10, 380, 40);
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel2.setText("The Rela Informatic Schools");
+        jLabel2.setText("The Real Informatic Schools");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(10, 50, 230, 30);
+
+        labeltanggal.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jPanel1.add(labeltanggal);
         labeltanggal.setBounds(950, 10, 180, 40);
+
+        labeljam.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         jPanel1.add(labeljam);
         labeljam.setBounds(950, 50, 220, 40);
 
@@ -536,32 +543,33 @@ public void setTanggal(){
     java.text.SimpleDateFormat kal = new
     java.text.SimpleDateFormat("dd/MM/yyyy");
     labeltanggal.setText(kal.format(skrg));
+    
 }
 
 public void SetJam(){
     ActionListener taskPerformer = new ActionListener() {
-        public void actionPerformed(ActionEvent evt){
-            Date dt = new Date();
-            int nilai_jam = dt.getHours();
-            int nilai_menit = dt.getMinutes();
-            int nilai_detik = dt.getSeconds();
-            if (nilai_jam<= 9 ){
-                nol_jam = "0";
-            }
-            if (nilai_menit <= 9){
-                nol_menit = "0";
-            }
-            if (nilai_detik <= 9){
-                nol_detik = "0";
-            }
 
-            String jam = nol_jam + Integer.toString(nilai_jam);
-            String menit = nol_menit + Integer.toString(nilai_menit);
-            String detik = nol_detik + Integer.toString(nilai_detik);
-            labeljam.setText("Jam" + jam + ":" + menit + ":" + detik);
-    }
-};
-new Timer (100, taskPerformer).start();
+            @Override
+        public void actionPerformed(ActionEvent evt) {
+        String nol_jam = "", nol_menit = "",nol_detik = "";
+
+        java.util.Date dateTime = new java.util.Date();
+        int nilai_jam = dateTime.getHours();
+        int nilai_menit = dateTime.getMinutes();
+        int nilai_detik = dateTime.getSeconds();
+
+        if(nilai_jam <= 9) nol_jam= "0";
+        if(nilai_menit <= 9) nol_menit= "0";
+        if(nilai_detik <= 9) nol_detik= "0";
+
+        String jam = nol_jam + Integer.toString(nilai_jam);
+        String menit = nol_menit + Integer.toString(nilai_menit);
+        String detik = nol_detik + Integer.toString(nilai_detik);
+
+        labeljam.setText(jam+":"+menit+":"+detik+"");
+      }
+    };
+        new Timer(1000, taskPerformer).start();
 }
 
 
