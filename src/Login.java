@@ -551,7 +551,7 @@ public void SetJam(){
 
             @Override
         public void actionPerformed(ActionEvent evt) {
-        String nol_jam = "", nol_menit = "",nol_detik = "";
+        String nol_jam = "", nol_menit = " ",nol_detik = "";
 
         java.util.Date dateTime = new java.util.Date();
         int nilai_jam = dateTime.getHours();
